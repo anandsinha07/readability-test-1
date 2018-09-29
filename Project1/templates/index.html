@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+<style>
+    .droparea {
+        width: 200px;
+        height: 200px;
+        border-style: solid;
+        border-width: 3px;
+        border-color: red;
+        float: left;
+        line-height: 200px;
+        text-align: center;
+    }
+  </style>
+  <form action="http://localhost:5000/display" method="POST"enctype="multipart/form-data">
+    <input type="file" name="fil">
+    <select name="chooseindex">
+        <option value="1">Flesch Reading Ease</option>
+        <option value="2">Smog Index</option>
+        <option value="3">Gunning Index</option>
+        <option value="4">Dale Chall Readability Score</option>
+    </select>
+    <input type="submit" name="Calculate">
+  </form>
+  <script type="text/javascript">
+    var dragHandler = function(evt){
+        evt.preventDefault();
+    };
+
+    var dropHandler = function(evt){
+        evt.preventDefault();
+        var files = evt.originalEvent.dataTransfer.files;
+        console.log(files[0]);
+    };
+
+    var dropHandlerSet = {
+        dragover: dragHandler,
+        drop: dropHandler
+    };
+
+    $(".droparea").on(dropHandlerSet);
+  </script>
+  <script type="text/javascript">
+  var dropHandler = function(evt){
+    evt.preventDefault();
+    var files = evt.originalEvent.dataTransfer.files;
+
+    var formData = new FormData();
+    formData.append("file2upload", files[0]);
+
+    var req = {
+        url: "/sendfile",
+        method: "post",
+        processData: false,
+        contentType: false,
+        data: formData
+    };
+
+    var promise = $.ajax(req);
+};
+  </script>
+</html>
